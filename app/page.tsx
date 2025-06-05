@@ -65,7 +65,7 @@ export default function AtivoPortfolio() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="text-2xl font-bold" style={{ color: "#FFF200" }}>
-              Ativo
+              <img width={100} src="/logos/logo-p.png" alt="Logo Site" />
             </div>
             <div className="flex items-center space-x-8">
               <div className="hidden md:flex space-x-8">
@@ -164,32 +164,17 @@ export default function AtivoPortfolio() {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
           <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-8">
             {/* Logo/Title */}
-            <div className="mb-4">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight">
-                <span className="inline-block animate-bounce" style={{ animationDelay: "0s", color: "#FEFEFE" }}>
-                  A
-                </span>
-                <span className="inline-block animate-bounce" style={{ animationDelay: "0.1s", color: "#FEFEFE" }}>
-                  t
-                </span>
-                <span className="inline-block animate-bounce" style={{ animationDelay: "0.2s", color: "#FEFEFE" }}>
-                  i
-                </span>
-                <span className="inline-block animate-bounce" style={{ animationDelay: "0.3s", color: "#FEFEFE" }}>
-                  v
-                </span>
-                <span className="inline-block animate-bounce" style={{ animationDelay: "0.4s", color: "#FEFEFE" }}>
-                  o
-                </span>
-                <span className="inline-block animate-bounce mx-4" style={{ animationDelay: "0.5s" }}>
-                  <Zap className="inline w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20" style={{ color: "#FFF200" }} />
+            <div className="">
+              <h1 className="text-6xl md:text-8xl lg:text-2xl font-bold leading-tight">
+              <span className="inline-block animate-bounce" style={{ animationDelay: "0s", color: "#FEFEFE" }}>
+                <img width={500} src="/logos/logo-n.png" alt="Logo Site" />
                 </span>
               </h1>
             </div>
 
             {/* Subtitle */}
             <div className="w-25">
-              <p className="text-lg md:text-2xl lg:text-4xl" style={{ color: "#D2D2D2" }}>
+              <p className="text-lg md:text-2xl lg:text-3xl" style={{ color: "#D2D2D2" }}>
                 <span className=" font-mono">
                   <strong>{t.hero.subtitle}</strong>
                 </span>
@@ -486,7 +471,7 @@ export default function AtivoPortfolio() {
                   }}
                 >
                   <div className="text-3xl font-bold mb-2" style={{ color: "#FFF200" }}>
-                    50+
+                    100+
                   </div>
                   <div style={{ color: "#D2D2D2" }}>{t.about.projects}</div>
                 </div>
