@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { translations, languages } from "./texts/index"
 
+
 type TranslationsType = typeof translations
 type LangCode = keyof TranslationsType
 
@@ -337,7 +338,67 @@ export default function AtivoPortfolio() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 font-mono">
+{/* ////////////////////////// Código antigo dos CARDS comentado abaixo do novo //////////////////////////// */}
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 font-mono">
+                {t.services.items.map((service, index) => (
+    <Card
+      key={index}
+      id={`service-${index}`}
+      data-animate
+      className={`transition-all duration-20 hover:scale-120 hover:shadow-2xl hover:-translate-y-1 hover:rotate-1 group ${
+        isVisible[`service-${index}`] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+      style={{
+        /*backgroundColor: "rgba(20, 15, 15, 0.95)",*/
+        borderColor: "rgba(254, 254, 254, 0.1)",
+        transitionDelay: `${index * 100}ms`,
+        boxShadow: "rgba(255, 242, 0, 0.2) 0px 25px 50px -12px",
+        backgroundImage: [
+          "url(/assets/img/01_card.png) ", // Índice 0 
+          "url(/assets/img/02_card.png)", // Índice 1
+          "url(/assets/img/03_card.png)", // Índice 2
+          "url(/assets/img/04_card.png)", // Índice 3
+          "url(/assets/img/05_card.png)", // Índice 4
+          "url(/assets/img/06_card.png)", // Índice 5
+        ][index],
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <CardContent className="p-8 text-center relative z-10">
+        <div
+          className="inline-flex p-4 rounded-full mb-6"
+          style={{
+            background:
+              index % 2 === 0
+                ? "linear-gradient(135deg, #FFF200, #FFF8AF)"
+                : "linear-gradient(135deg, #FFF8AF, #FEFEFE)",
+            color: "#140f0f",
+          }}
+        >
+          {[
+            <Code key="code" className="w-12 h-12" />,
+            <Smartphone key="smartphone" className="w-12 h-12" />,
+            <Globe key="globe" className="w-12 h-12" />,
+            <Shield key="shield" className="w-12 h-12" />,
+            <Cpu key="cpu" className="w-12 h-12" />,
+            <Rocket key="rocket" className="w-12 h-12" />,
+          ][index]}
+        </div>
+        <h3 className="text-2xl font-bold mb-4" style={{ color: "#FEFEFE" }}>
+          {service.title}
+        </h3>
+        <p className="leading-relaxed" style={{ color: "#D2D2D2" }}>
+          {service.description}
+        </p>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
+         {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 font-mono">
             {t.services.items.map((service, index) => (
               <Card
                 key={index}
@@ -364,7 +425,7 @@ export default function AtivoPortfolio() {
                       color: "#140f0f",
                     }}
                   >
-                    {
+                    { 
                       [
                         <Code key="code" className="w-12 h-12" />,
                         <Smartphone key="smartphone" className="w-12 h-12" />,
@@ -384,7 +445,7 @@ export default function AtivoPortfolio() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </div> */}
           <div
             id="services-button"
             data-animate
