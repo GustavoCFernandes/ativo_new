@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+
+
+
+
 export const metadata: Metadata = {
   title: 'Ativo',
   description: 'Simplify your workflow with Ativo',

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { translations, languages } from "./texts/index"
+import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 
 type TranslationsType = typeof translations
 type LangCode = keyof TranslationsType
@@ -22,8 +23,8 @@ export default function AtivoPortfolio() {
   const contactRef = useRef(null)
 
   const infoContacts = [
-    { foreigner: true, email: 'ana@email.com', phone: '55 34243243' },
-    { foreigner: false, email: 'email@brasil.com', phone: '55 34243243' },
+    { foreigner: true, email: process.env.NEXT_PUBLIC_EMAIL_EXTERIOR, phone: process.env.NEXT_PUBLIC_TELEFONE_EXTERIOR },
+    { foreigner: false, email: process.env.NEXT_PUBLIC_EMAIL_BRASIL, phone: process.env.NEXT_PUBLIC_TELEFONE_BRASIL },
   ];
 
   function filterContactsByType(foreigner: boolean, p0: string) {
@@ -60,6 +61,15 @@ export default function AtivoPortfolio() {
   const scrollToSection = (ref: any) => {
     ref.current?.scrollIntoView({ behavior: "smooth" })
   }
+
+  const cardsBackgrounds = [
+    "/assets/img/01_card.png",
+    "/assets/img/02_card.png",
+    "/assets/img/03_card.png",
+    "/assets/img/04_card.png",
+    "/assets/img/05_card.png",
+    "/assets/img/06_card.png",
+  ]
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -155,7 +165,7 @@ export default function AtivoPortfolio() {
       <section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden text-white"
-        style={{ background: "linear-gradient(135deg, #140f0f, #303030)" }}
+        style={{ background: "linear-gradient(135deg, #140f0f,rgb(70, 73, 21))" }}
       >
         {/* Animated Background */}
         <div className="absolute inset-0">
@@ -165,7 +175,7 @@ export default function AtivoPortfolio() {
               backgroundImage: "url('/background_img.jpeg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
-              opacity: 0.25, // ajuste a transparência aqui
+              opacity: 0.25,
             }}
           />
         </div>
@@ -305,7 +315,7 @@ export default function AtivoPortfolio() {
         </div>
       </section>
 
-      {/* Services Section - Light */}
+      {/* Services Section Cards - Light */}
       <section ref={servicesRef} className="py-20 relative" style={{ background: "rgba(230, 227, 179, 0.5)" }}>
         <div
           className="absolute inset-0 opacity-10"
@@ -334,19 +344,22 @@ export default function AtivoPortfolio() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 font-mono">
             {t.services.items.map((service, index) => (
               <Card
-                key={index}
-                id={`service-${index}`}
-                data-animate
-                className={`transition-all duration-100 hover:scale-110 hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 group ${
-                  isVisible[`service-${index}`] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-                style={{
-                  backgroundColor: "rgba(20, 15, 15, 0.95)",
-                  borderColor: "rgba(254, 254, 254, 0.1)",
-                  transitionDelay: `${index * 100}ms`,
-                  boxShadow: "rgba(255, 242, 0, 0.2) 0px 25px 50px -12px",
-                }}
-              >
+              key={index}
+              id={`service-${index}`}
+              data-animate
+              className={`relative transition-all duration-100 hover:scale-110 hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 group ${
+                isVisible[`service-${index}`] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
+              style={{
+                backgroundImage: `url(${cardsBackgrounds[index]})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                minHeight: "360px",
+                borderColor: "rgba(254, 254, 254, 0.1)",
+                transitionDelay: `${index * 100}ms`,
+                boxShadow: "rgba(255, 242, 0, 0.2) 0px 25px 50px -12px",
+              }}
+            >
                 <CardContent className="p-8 text-center">
                   <div
                     className="inline-flex p-4 rounded-full mb-6"
@@ -378,70 +391,6 @@ export default function AtivoPortfolio() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-          <div
-            id="services-button"
-            data-animate
-            className={`text-center mt-12 transition-all duration-1000 ${
-              isVisible["services-button"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
-          >
-            <div className="voltage-button">
-              <button onClick={() => scrollToSection(contactRef)}>{t.services.quoteBtn}</button>
-              <svg
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                viewBox="0 0 234.6 61.3"
-                preserveAspectRatio="none"
-                xmlSpace="preserve"
-              >
-                <filter id="glow">
-                  <feGaussianBlur className="blur" result="coloredBlur" stdDeviation="2"></feGaussianBlur>
-                  <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="0.075"
-                    numOctaves="0.3"
-                    result="turbulence"
-                  ></feTurbulence>
-                  <feDisplacementMap
-                    in="SourceGraphic"
-                    in2="turbulence"
-                    scale="30"
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                    result="displace"
-                  ></feDisplacementMap>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"></feMergeNode>
-                    <feMergeNode in="coloredBlur"></feMergeNode>
-                    <feMergeNode in="coloredBlur"></feMergeNode>
-                    <feMergeNode in="displace"></feMergeNode>
-                    <feMergeNode in="SourceGraphic"></feMergeNode>
-                  </feMerge>
-                </filter>
-                <path
-                  className="voltage line-1"
-                  d="m216.3 51.2c-3.7 0-3.7-1.1-7.3-1.1-3.7 0-3.7 6.8-7.3 6.8-3.7 0-3.7-4.6-7.3-4.6-3.7 0-3.7 3.6-7.3 3.6-3.7 0-3.7-0.9-7.3-0.9-3.7 0-3.7-2.7-7.3-2.7-3.7 0-3.7 7.8-7.3 7.8-3.7 0-3.7-4.9-7.3-4.9-3.7 0-3.7-7.8-7.3-7.8-3.7 0-3.7-1.1-7.3-1.1-3.7 0-3.7 3.1-7.3 3.1-3.7 0-3.7 10.9-7.3 10.9-3.7 0-3.7-12.5-7.3-12.5-3.7 0-3.7 4.6-7.3 4.6-3.7 0-3.7 4.5-7.3 4.5-3.7 0-3.7 3.6-7.3 3.6-3.7 0-3.7-10-7.3-10-3.7 0-3.7-0.4-7.3-0.4-3.7 0-3.7 2.3-7.3 2.3-3.7 0-3.7 7.1-7.3 7.1-3.7 0-3.7-11.2-7.3-11.2-3.7 0-3.7 3.5-7.3 3.5-3.7 0-3.7 3.6-7.3 3.6-3.7 0-3.7-2.9-7.3-2.9-3.7 0-3.7 8.4-7.3 8.4-3.7 0-3.7-14.6-7.3-14.6-3.7 0-3.7-5.8-7.3-5.8-2.2 0-3.8-0.4-5.5-1.5-1.8-1.1-1.8-2.9-2.9-4.8-1-1.8 1.9-2.7 1.9-4.8 0-3.4-2.1-3.4-2.1-6.8s-9.9-3.4-9.9-6.8 8-3.4 8-6.8c0-2.2 2.1-2.4 3.1-4.2 1.1-1.8 0.2-3.9 2-5 1.8-1 3.1-7.9 5.3-7.9 3.7 0 3.7 0.9 7.3 0.9 3.7 0 3.7 6.7 7.3 6.7 3.7 0 3.7-1.8 7.3-1.8 3.7 0 3.7-0.6 7.3-0.6 3.7 0 3.7-7.8 7.3-7.8h7.3c3.7 0 3.7 4.7 7.3 4.7 3.7 0 3.7-1.1 7.3-1.1 3.7 0 3.7 11.6 7.3 11.6 3.7 0 3.7-2.6 7.3-2.6 3.7 0 3.7-12.9 7.3-12.9 3.7 0 3.7 10.9 7.3 10.9 3.7 0 3.7 1.3 7.3 1.3 3.7 0 3.7-8.7 7.3-8.7 3.7 0 3.7 11.5 7.3 11.5 3.7 0 3.7-1.4 7.3-1.4 3.7 0 3.7-2.6 7.3-2.6 3.7 0 3.7-5.8 7.3-5.8 3.7 0 3.7-1.3 7.3-1.3 3.7 0 3.7 6.6 7.3 6.6s3.7-9.3 7.3-9.3c3.7 0 3.7 0.2 7.3 0.2 3.7 0 3.7 8.5 7.3 8.5 3.7 0 3.7 0.2 7.3 0.2 3.7 0 3.7-1.5 7.3-1.5 3.7 0 3.7 1.6 7.3 1.6s3.7-5.1 7.3-5.1c2.2 0 0.6 9.6 2.4 10.7s4.1-2 5.1-0.1c1 1.8 10.3 2.2 10.3 4.3 0 3.4-10.7 3.4-10.7 6.8s1.2 3.4 1.2 6.8 1.9 3.4 1.9 6.8c0 2.2-6 2.7-7 4.4-1.1 1.8 1.1 6.7-0.7 7.7-1.6 0.8-4.7-1.1-6.8-1.1z"
-                  fill="transparent"
-                  stroke="#FFF200"
-                ></path>
-                <path
-                  className="voltage line-2"
-                  d="m216.3 52.1c-3 0-3-0.5-6-0.5s-3 3-6 3-3-2-6-2-3 1.6-6 1.6-3-0.4-6-0.4-3-1.2-6-1.2-3 3.4-6 3.4-3-2.2-6-2.2-3-3.4-6-3.4-3-0.5-6-0.5-3 1.4-6 1.4-3 4.8-6 4.8-3-5.5-6-5.5-3 2-6 2-3 2-6 2-3 1.6-6 1.6-3-4.4-6-4.4-3-0.2-6-0.2-3 1-6 1-3 3.1-6 3.1-3-4.9-6-4.9-3 1.5-6 1.5-3 1.6-6 1.6-3-1.3-6-1.3-3 3.7-6 3.7-3-6.4-6-6.4-3 2.5-6 2.5h-6c-3 0-3-0.6-6-0.6s-3-1.4-6-1.4-3 0.9-6 0.9-3 4.3-6 4.3-3-3.5-6-3.5c-2.2 0-3.4-1.3-5.2-2.3-1.8-1.1-3.6-1.5-4.6-3.3s-4.4-3.5-4.4-5.7c0-3.4 0.4-3.4 0.4-6.8s2.9-3.4 2.9-6.8-0.8-3.4-0.8-6.8c0-2.2 0.3-4.2 1.3-5.9 1.1-1.8 0.8-6.2 2.6-7.3 1.8-1 5.5-2 7.7-2 3 0 3 2 6 2s3-0.5 6-0.5 3 5.1 6 5.1 3-1.1 6-1.1 3-5.6 6-5.6 3 4.8 6 4.8 3 0.6 6 0.6 3-3.8 6-3.8 3 5.1 6 5.1 3-0.6 6-0.6 3-1.2 6-1.2 3-2.6 6-2.6 3-0.6 6-0.6 3 2.9 6 2.9 3-4.1 6-4.1 3 0.1 6 0.1 3 3.7 6 3.7 3 0.1 6 0.1 3-0.6 6-0.6 3 0.7 6 0.7 3-2.2 6-2.2 3 4.4 6 4.4 3-1.7 6-1.7 3-4 6-4 3 4.7 6 4.7 3-0.5 6-0.5 3-0.8 6-0.8 3-3.8 6-3.8 3 6.3 6 6.3 3-4.8 6-4.8 3 1.9 6 1.9 3-1.9 6-1.9 3 1.3 6 1.3c2.2 0 5-0.5 6.7 0.5 1.8 1.1 2.4 4 3.5 5.8 1 1.8 0.3 3.7 0.3 5.9 0 3.4 3.4 3.4 3.4 6.8s-3.3 3.4-3.3 6.8 4 3.4 4 6.8c0 2.2-6 2.7-7 4.4-1.1 1.8 1.1 6.7-0.7 7.7-1.6 0.8-4.7-1.1-6.8-1.1z"
-                  fill="transparent"
-                  stroke="#FFF8AF"
-                ></path>
-              </svg>
-              <div className="dots">
-                <div className="dot dot-1"></div>
-                <div className="dot dot-2"></div>
-                <div className="dot dot-3"></div>
-                <div className="dot dot-4"></div>
-                <div className="dot dot-5"></div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -544,7 +493,14 @@ export default function AtivoPortfolio() {
       </section>
 
       {/* Contact Section - Light */}
-      <section ref={contactRef} className="py-20" style={{ backgroundColor: "#f8f9fa" }}>
+      <section ref={contactRef} className="py-20"
+      style={{
+        backgroundImage: `url('/assets/img/contact-background.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+      >
         <div className="container mx-auto px-6">
           <div
             id="contact-title"
@@ -553,10 +509,10 @@ export default function AtivoPortfolio() {
               isVisible["contact-title"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-5xl font-bold mb-6" style={{ color: "#212529" }}>
+            <h2 className="text-5xl font-bold mb-6" style={{ color: "#FEFEFE" }}>
               {t.contact.title}
             </h2>
-            <p className="text-xl max-w-3xl mx-auto font-mono" style={{ color: "#495057" }}>
+            <p className="text-xl max-w-3xl mx-auto font-mono" style={{ color: "#FEFEFE" }}>
               {t.contact.subtitle}
             </p>
           </div>
@@ -605,7 +561,7 @@ export default function AtivoPortfolio() {
                   <div>
                     <div style={{ color: "#D2D2D2" }}>
                         {filterContactsByType(true, 'phone').map((contact, idx) => (
-                          <div key={idx}>{contact.phone}</div>
+                          <div key={idx}>{formatPhoneNumber(contact.phone as string)}</div>
                         ))}
                       </div>
                   </div>
@@ -638,7 +594,7 @@ export default function AtivoPortfolio() {
             >
               <Card
                 style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.95)",
+                  backgroundColor: "rgba(17, 2, 2, 0.95)",
                   borderColor: "rgba(0, 0, 0, 0.1)",
                   boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
                 }}
@@ -735,7 +691,7 @@ export default function AtivoPortfolio() {
           <div className="text-2xl font-bold mb-4" style={{ color: "#FFF200" }}>
             Ativo
           </div>
-          <small style={{ color: "#D2D2D2" }}>© 2024 Ativo. {t.footer.rights}</small>
+          <small style={{ color: "#D2D2D2" }}>© 2025 Ativo. {t.footer.rights}</small>
         </div>
       </footer>
 
