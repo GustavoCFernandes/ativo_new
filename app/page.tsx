@@ -21,6 +21,15 @@ export default function AtivoPortfolio() {
   const aboutRef = useRef(null)
   const contactRef = useRef(null)
 
+  const infoContacts = [
+    { foreigner: true, email: 'ana@email.com', phone: '55 34243243' },
+    { foreigner: false, email: 'email@brasil.com', phone: '55 34243243' },
+  ];
+
+  function filterContactsByType(foreigner: boolean, p0: string) {
+    return infoContacts.filter(contact => contact.foreigner === foreigner);
+  }
+
   const t = translations[currentLang]
 
   useEffect(() => {
@@ -166,7 +175,7 @@ export default function AtivoPortfolio() {
             {/* Logo/Title */}
             <div className="">
               <h1 className="text-6xl md:text-8xl lg:text-2xl font-bold leading-tight">
-              <span className="inline-block animate-bounce" style={{ animationDelay: "0s", color: "#FEFEFE" }}>
+              <span className="inline-block animate-pulse" style={{ animationDelay: "0s", color: "#FEFEFE" }}>
                 <img width={500} src="/logos/logo-n.png" alt="Logo Site" />
                 </span>
               </h1>
@@ -174,7 +183,7 @@ export default function AtivoPortfolio() {
 
             {/* Subtitle */}
             <div className="w-25">
-              <p className="text-lg md:text-2xl lg:text-3xl" style={{ color: "#D2D2D2" }}>
+              <p className="text-lg md:text-2xl lg:text-2xl" style={{ color: "#D2D2D2" }}>
                 <span className=" font-mono">
                   <strong>{t.hero.subtitle}</strong>
                 </span>
@@ -577,7 +586,11 @@ export default function AtivoPortfolio() {
                     <div className="font-semibold" style={{ color: "#FEFEFE" }}>
                       {t.contact.email}
                     </div>
-                    <div style={{ color: "#D2D2D2" }}>contato@ativo.com.br</div>
+                    <div style={{ color: "#D2D2D2" }}>
+                      {filterContactsByType(true, 'email').map((contact, idx) => (
+                        <div key={idx}>{contact.email}</div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -590,10 +603,11 @@ export default function AtivoPortfolio() {
                 >
                   <Phone className="w-6 h-6 mr-4" style={{ color: "#FFF8AF" }} />
                   <div>
-                    <div className="font-semibold" style={{ color: "#FEFEFE" }}>
-                      {t.contact.phone}
-                    </div>
-                    <div style={{ color: "#D2D2D2" }}>(11) 99999-9999</div>
+                    <div style={{ color: "#D2D2D2" }}>
+                        {filterContactsByType(true, 'phone').map((contact, idx) => (
+                          <div key={idx}>{contact.phone}</div>
+                        ))}
+                      </div>
                   </div>
                 </div>
 
@@ -721,7 +735,7 @@ export default function AtivoPortfolio() {
           <div className="text-2xl font-bold mb-4" style={{ color: "#FFF200" }}>
             Ativo
           </div>
-          <p style={{ color: "#D2D2D2" }}>© 2024 Ativo. {t.footer.rights}</p>
+          <small style={{ color: "#D2D2D2" }}>© 2024 Ativo. {t.footer.rights}</small>
         </div>
       </footer>
 
