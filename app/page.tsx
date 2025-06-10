@@ -590,15 +590,31 @@ export default function AtivoPortfolio() {
                     border: "1px solid rgba(254, 254, 254, 0.1)",
                   }}
                 >
-                  <Phone className="w-6 h-6 mr-4" style={{ color: "#FFF8AF" }} />
+                <div className='w-6 h-6 mr-4'>
+                  <img width={25} src="/assets/icons/whatsapp.png" alt="Image Whatsapp" />
+                </div>
                   <div>
                     <div style={{ color: "#D2D2D2" }}>
-                        {filterContactsByType(true, 'phone').map((contact, idx) => (
-                          <div key={idx}>{formatPhoneNumber(contact.phone as string)}</div>
-                        ))}
-                      </div>
+                      {filterContactsByType(true, 'phone').map((contact, idx) => {
+                        const phone = contact.phone as string;
+                        const formatted = phone.replace(/\D/g, '');
+                        return (
+                          <div key={idx}>
+                            <a
+                              href={`https://wa.me/${formatted}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ textDecoration: "underline", color: "#D2D2D2" }}
+                            >
+                              {formatPhoneNumber(phone)}
+                            </a>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+
 
                 <div
                   className="flex items-center p-4 rounded-lg transition-colors"

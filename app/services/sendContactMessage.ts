@@ -2,7 +2,7 @@ export async function sendContactMessage(form: HTMLFormElement): Promise<'ok' | 
     const data = new FormData(form);
 
     try {
-      const res = await fetch('https://formspree.io/f/xeokarwb', {
+      const res = await fetch(`https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID}`, {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
