@@ -107,3 +107,29 @@ body {
 .animate-slide-fade-in {
   animation: slide-fade-in 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
+
+.voltage-button button {
+  color: rgb(70, 73, 21);
+  background: transparent;
+  padding: 1rem 3rem 1rem 3rem;
+  border-radius: 5rem;
+  border: 5px solid rgb(176, 184, 37);
+  font-size: 1.2rem;
+  line-height: 1em;
+  letter-spacing: 0.075em;
+  transition: background 0.3s;
+}
+
+.voltage-button svg {
+  display: block;
+  position: absolute;
+  top: -0.75em;
+  left: -0.25em;
+  width: calc(100% + 0.5em);
+  height: calc(100% + 1.5em);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  transition-delay: 0.1s;
+}
+

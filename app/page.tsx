@@ -8,10 +8,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { translations, languages } from "./texts/index"
-import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 import FullscreenLoader from './components/FullscreenLoader'
 import { sendContactMessage } from './services/sendContactMessage'
 import AlertAtivo from './components/AlertAtivo'
+import WhatsappContact from './components/WhatsappContact'
 
 type TranslationsType = typeof translations
 type LangCode = keyof TranslationsType
@@ -29,8 +29,8 @@ export default function AtivoPortfolio() {
   const [showAlert, setShowAlert] = useState(false);
 
   const infoContacts = [
-    { foreigner: true, email: process.env.NEXT_PUBLIC_EMAIL_EXTERIOR, phone: process.env.NEXT_PUBLIC_TELEFONE_EXTERIOR },
-    { foreigner: false, email: process.env.NEXT_PUBLIC_EMAIL_BRASIL, phone: process.env.NEXT_PUBLIC_TELEFONE_BRASIL },
+    { foreigner: true, email: process.env.NEXT_PUBLIC_EMAIL_EXTERIOR ?? '', phone: process.env.NEXT_PUBLIC_TELEFONE_EXTERIOR ?? '' },
+    { foreigner: false, email: process.env.NEXT_PUBLIC_EMAIL_BRASIL ?? '', phone: process.env.NEXT_PUBLIC_TELEFONE_BRASIL ?? '' },
   ];
 
   function filterContactsByType(foreigner: boolean, p0: string) {
@@ -339,13 +339,6 @@ export default function AtivoPortfolio() {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 rounded-full flex justify-center" style={{ borderColor: "#FFF200" }}>
-            <div className="w-1 h-3 rounded-full mt-2 animate-pulse" style={{ backgroundColor: "#FFF200" }} />
-          </div>
-        </div>
       </section>
 
       {/* Services Section Cards - Light */}
@@ -462,7 +455,7 @@ export default function AtivoPortfolio() {
                   }}
                 >
                   <div className="text-3xl font-bold mb-2" style={{ color: "#FFF200" }}>
-                    100+
+                    80+
                   </div>
                   <div style={{ color: "#D2D2D2" }}>{t.about.projects}</div>
                 </div>
@@ -583,38 +576,7 @@ export default function AtivoPortfolio() {
                   </div>
                 </div>
 
-                <div
-                  className="flex items-center p-4 rounded-lg transition-colors"
-                  style={{
-                    backgroundColor: "rgba(20, 15, 15, 0.95)",
-                    border: "1px solid rgba(254, 254, 254, 0.1)",
-                  }}
-                >
-                <div className='w-6 h-6 mr-4'>
-                  <img width={25} src="/assets/icons/whatsapp.png" alt="Image Whatsapp" />
-                </div>
-                  <div>
-                    <div style={{ color: "#D2D2D2" }}>
-                      {filterContactsByType(true, 'phone').map((contact, idx) => {
-                        const phone = contact.phone as string;
-                        const formatted = phone.replace(/\D/g, '');
-                        return (
-                          <div key={idx}>
-                            <a
-                              href={`https://wa.me/${formatted}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ textDecoration: "underline", color: "#D2D2D2" }}
-                            >
-                              {formatPhoneNumber(phone)}
-                            </a>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
+                <WhatsappContact contacts={infoContacts} />
 
                 <div
                   className="flex items-center p-4 rounded-lg transition-colors"
