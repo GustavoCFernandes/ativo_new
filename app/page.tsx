@@ -9,6 +9,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { translations, languages } from "./texts/index"
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
+import FullscreenLoader from './components/FullscreenLoader'
+import { sendContactMessage } from './services/sendContactMessage'
+import AlertAtivo from './components/AlertAtivo'
 
 type TranslationsType = typeof translations
 type LangCode = keyof TranslationsType
@@ -17,10 +20,13 @@ export default function AtivoPortfolio() {
   const [scrollY, setScrollY] = useState(0)
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({})
   const [currentLang, setCurrentLang] = useState<LangCode>("pt")
+  const [loading, setLoading] = useState(false);
   const heroRef = useRef(null)
   const servicesRef = useRef(null)
   const aboutRef = useRef(null)
   const contactRef = useRef(null)
+  const [status, setStatus] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const infoContacts = [
     { foreigner: true, email: process.env.NEXT_PUBLIC_EMAIL_EXTERIOR, phone: process.env.NEXT_PUBLIC_TELEFONE_EXTERIOR },
@@ -33,11 +39,38 @@ export default function AtivoPortfolio() {
 
   const t = translations[currentLang]
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    setLoading(true);
+    try {
+      const result = await sendContactMessage(form);
+
+      if (result === 'ok') {
+        setStatus('Mensagem enviada com sucesso!');
+        form.reset();
+        setShowAlert(true)
+      } else {
+        setStatus(result);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => setShowAlert(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -218,7 +251,7 @@ export default function AtivoPortfolio() {
                     <feTurbulence
                       type="fractalNoise"
                       baseFrequency="0.075"
-                      numOctaves="0.3"
+                      numOctaves="1"
                       result="turbulence"
                     ></feTurbulence>
                     <feDisplacementMap
@@ -270,7 +303,7 @@ export default function AtivoPortfolio() {
                     <feTurbulence
                       type="fractalNoise"
                       baseFrequency="0.075"
-                      numOctaves="0.3"
+                      numOctaves="1"
                       result="turbulence"
                     ></feTurbulence>
                     <feDisplacementMap
@@ -600,13 +633,14 @@ export default function AtivoPortfolio() {
                 }}
               >
                 <CardContent className="p-8">
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-2" style={{ color: "#495057" }}>
                           {t.contact.form.name}
                         </label>
                         <Input
+                          name="name"
                           className="text-gray-800"
                           placeholder={t.contact.form.namePlaceholder}
                           style={{
@@ -621,6 +655,7 @@ export default function AtivoPortfolio() {
                           {t.contact.form.email}
                         </label>
                         <Input
+                          name="email"
                           className="text-gray-800"
                           placeholder={t.contact.form.emailPlaceholder}
                           style={{
@@ -637,6 +672,7 @@ export default function AtivoPortfolio() {
                         {t.contact.form.subject}
                       </label>
                       <Input
+                        name="subject"
                         className="text-gray-800"
                         placeholder={t.contact.form.subjectPlaceholder}
                         style={{
@@ -652,6 +688,7 @@ export default function AtivoPortfolio() {
                         {t.contact.form.message}
                       </label>
                       <Textarea
+                        name="message"
                         className="text-gray-800 min-h-[120px]"
                         placeholder={t.contact.form.messagePlaceholder}
                         style={{
@@ -663,6 +700,7 @@ export default function AtivoPortfolio() {
                     </div>
 
                     <Button
+                      type="submit"
                       className="w-full py-3 transition-all duration-300 text-gray-800 font-bold"
                       style={{
                         background: "linear-gradient(135deg, #FFF200, #FFF8AF)",
@@ -671,6 +709,10 @@ export default function AtivoPortfolio() {
                     >
                       {t.contact.form.submit}
                     </Button>
+                    {loading && <FullscreenLoader />}
+                    {showAlert && (
+                      <AlertAtivo status={status} onClose={() => setShowAlert(false)} />
+                    )}
                   </form>
                 </CardContent>
               </Card>
