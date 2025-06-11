@@ -1,9 +1,10 @@
 export const languages = [
-    { code: "pt", name: "Português", flag: "🇧🇷" },
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "de", name: "Deutsch", flag: "🇩🇪" },
-    { code: "es", name: "Español", flag: "🇪🇸" },
-  ]
+  { code: "pt", name: "Português", flag: "🇧🇷" },
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "it", name: "Italiano", flag: "🇮🇹" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+];
 
 export const translations = {
     pt: {
@@ -166,6 +167,86 @@ export const translations = {
       },
       footer: {
         rights: "All rights reserved. Transforming ideas into digital reality.",
+      },
+    },
+    it: {
+      nav: {
+        home: "Home",
+        services: "Servizi",
+        about: "Chi siamo",
+        contact: "Contatto",
+      },
+      hero: {
+        subtitle: "Trasformiamo idee in soluzioni tecnologiche innovative.",
+        servicesBtn: "I nostri Servizi",
+        contactBtn: "Contattaci",
+      },
+      services: {
+        title: "I nostri Servizi",
+        subtitle: "Offriamo soluzioni tecnologiche complete per far crescere il tuo business",
+        quoteBtn: "Richiedi un Preventivo",
+        items: [
+          {
+            title: "Sviluppo Web",
+            description: "Siti e applicazioni web moderni, reattivi e ottimizzati per le prestazioni.",
+          },
+          {
+            title: "App Mobile",
+            description: "Applicazioni native e ibride per iOS e Android con un'esperienza utente eccezionale.",
+          },
+          {
+            title: "Sistemi Web",
+            description: "Piattaforme robuste e scalabili per la gestione aziendale e l'e-commerce.",
+          },
+          {
+            title: "Sicurezza Digitale",
+            description: "Protezione avanzata dei dati e implementazione di protocolli di sicurezza.",
+          },
+          {
+            title: "Consulenza Tecnologica",
+            description: "Analisi e ottimizzazione dell'infrastruttura tecnologica esistente.",
+          },
+          {
+            title: "Automazione",
+            description: "Processi automatizzati per aumentare l'efficienza e ridurre i costi.",
+          },
+        ],
+      },
+      about: {
+        title: "Chi è Ativo",
+        description1:
+          "Siamo un'azienda innovativa specializzata in soluzioni tecnologiche che trasformano le imprese. Con un team di esperti appassionati di tecnologia, sviluppiamo progetti che fanno la differenza.",
+        description2:
+          "La nostra missione è democratizzare l'accesso alla tecnologia avanzata, offrendo soluzioni personalizzate che soddisfano le esigenze specifiche di ogni cliente, dalle startup alle grandi aziende.",
+        teamTitle: "Il nostro Team",
+        teamDescription:
+          "Professionisti specializzati nello sviluppo full-stack, design UX/UI, DevOps e architettura software.",
+        projects: "Progetti Conseguiti",
+        experience: "Anni di Esperienza",
+        skills: ["Sviluppo Frontend & Backend", "Design UX/UI Professionale", "Infrastruttura e DevOps"],
+      },
+      contact: {
+        title: "Parliamone?",
+        subtitle: "Pronto a trasformare la tua idea in realtà? Contattaci!",
+        infoTitle: "Informazioni di Contatto",
+        email: "Email",
+        phone: "Telefono",
+        location: "Posizione",
+        locationValue: "San Paolo, SP - Brasile",
+        form: {
+          name: "Nome",
+          namePlaceholder: "Il tuo nome",
+          email: "Email",
+          emailPlaceholder: "tuo@email.com",
+          subject: "Oggetto",
+          subjectPlaceholder: "Come possiamo aiutarti?",
+          message: "Messaggio",
+          messagePlaceholder: "Descrivi il tuo progetto o necessità...",
+          submit: "Invia Messaggio",
+        },
+      },
+      footer: {
+        rights: "Tutti i diritti riservati. Trasformiamo idee in realtà digitale.",
       },
     },
     de: {
